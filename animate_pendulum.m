@@ -1,4 +1,4 @@
-function animate_pendulum(states,dt)
+function animate_pendulum(states,states_ref,dt)
 bRecord = 1;  
 %  bRecord = 0; % Uncomment this to not save a video
 if bRecord
@@ -26,8 +26,10 @@ contour(X,Y,a1,[0,0], 'k'); hold on;
 % Create trace of trajectory and particle object
 h = animatedline('LineStyle', ':', 'LineWidth', 1.5);
 particle = [];
+particle_ref = [];
 string = [];
-spring = [];
+string_ref = [];
+
 % Set up axes
 axis equal
 axis([xmin xmax ymin ymax])
@@ -38,9 +40,13 @@ for ii = 1:size(states,1)
     drawnow limitrate
     delete(particle) % Erases previous particle
     delete(string)
-    delete(spring)
-    particle = scatter(cos(states(ii,1)-pi/2),sin(states(ii,1)-pi/2),500, 'MarkerFaceColor',[1;0;0],'MarkerEdgeColor',[0;0;0]);
-    string = line([0,cos(states(ii,1)-pi/2)], [0,sin(states(ii,1)-pi/2)], 'Color', [0;0;0],'LineStyle','-');
+    delete(particle_ref) % Erases previous particle
+    delete(string_ref)
+    particle_ref = scatter(cos(states_ref(ii,1)-pi/2),sin(states_ref(ii,1)-pi/2),500, 'MarkerFaceColor',[1;0;0],'MarkerEdgeColor',[0;0;0]);
+    string_ref = line([0,cos(states_ref(ii,1)-pi/2)], [0,sin(states_ref(ii,1)-pi/2)], 'Color', [0;0;0],'LineStyle','-');
+    
+    particle = scatter(cos(states(ii,1)-pi/2),sin(states(ii,1)-pi/2),500, 'MarkerFaceColor',[0;0;1],'MarkerEdgeColor',[0;0;0]);
+    string = line([0,cos(states(ii,1)-pi/2)], [0,sin(states(ii,1)-pi/2)], 'Color', [0;0;0],'LineStyle','--');
 
     if bRecord
         frame = getframe(gcf);

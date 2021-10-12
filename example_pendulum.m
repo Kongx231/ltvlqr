@@ -42,5 +42,5 @@ xlabel('$$\theta$$');
 ylabel('$$\dot{\theta}$$');
 
 figure(2);
-animate_pendulum(new_states,dt)
+animate_pendulum(new_states,states,dt)
 
